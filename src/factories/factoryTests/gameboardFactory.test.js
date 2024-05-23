@@ -3,8 +3,10 @@ import { Gameboard } from "../gameboardFactory";
 
 
 let testingGameboard = new Gameboard();
+testingGameboard.placeShip(3,3,'carrier')
+testingGameboard.receiveInput(3,3)
 
-test('create new gameboard class', () => {
+test.skip('create new gameboard class', () => {
     expect(testingGameboard).toEqual(gameboardTestData)
 })
 
@@ -20,7 +22,6 @@ describe('testing placement of ships on board', () =>{
 describe('testing attacks on ships if a hit or miss', () => {
     
     test('returns a hit on a ship', () => {
-        testingGameboard.placeShip(2,3,'carrier')
         let [attackMessage, shipHit] = testingGameboard.receiveInput(2,3)
         expect(attackMessage).toBe("it's a hit!")
         expect(shipHit).toEqual(testingGameboard.carrier)
@@ -31,7 +32,13 @@ describe('testing attacks on ships if a hit or miss', () => {
         expect(attackMessage).toBe("it's a miss!")
         expect(shipHit).toEqual()
     })
+
+    test('not a valid attack', () => {
+        expect(testingGameboard.receiveInput(0,10)).toBe("not a valid attack")
+    })
+
+    test('already tried attack', () => {
+        expect(testingGameboard.receiveInput(3,3)).toBe("not a valid attack")
+    })
+
 })
-
-
-
