@@ -97,6 +97,14 @@ class Gameboard {
         return
     }
 
+    checkAllShipsSunk() {
+        this.updateSunkShipsStatus()
+        if (this.numberOfSunkShips === 5) {
+            this.allShipsSunk = true
+        }
+        return this.allShipsSunk
+    }
+
     receiveInput(x, y){
 
         if(this.isValidAttack(x,y)){
@@ -114,7 +122,8 @@ class Gameboard {
                 let target = ships[board[x][y]]
                 target.hit()
                 this.landedAttacks.push([x,y])
-                return ["it's a hit!", target.isSunk]
+                let allSunk = this.checkAllShipsSunk()
+                return ["it's a hit!", target.isSunk, allSunk ]
             } else {
                 this.missedAttacks.push([x,y])
                 return ["it's a miss!"]
