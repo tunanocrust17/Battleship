@@ -73,6 +73,30 @@ class Gameboard {
             && withinRange
     }
 
+    updateSunkShipsStatus(){
+        let ships = {
+            carrier: this.carrier,
+            battleship: this.battleship,
+            destroyer: this.destroyer,
+            submarine: this.submarine,
+            patrol: this.patrol
+        }
+
+        let shipKeys = Object.keys(ships);
+        let temporarySunkCount = 0;
+        
+
+        shipKeys.forEach((ship)=>{
+            if(ships[ship].isSunk) {
+                temporarySunkCount++
+            }
+        })
+
+        this.numberOfSunkShips = temporarySunkCount
+
+        return
+    }
+
     receiveInput(x, y){
 
         if(this.isValidAttack(x,y)){
@@ -85,11 +109,12 @@ class Gameboard {
                 submarine: this.submarine,
                 patrol: this.patrol
             }
+            
             if(board[x][y] !== null){
                 let target = ships[board[x][y]]
                 target.hit()
                 this.landedAttacks.push([x,y])
-                return ["it's a hit!", target]
+                return ["it's a hit!", target.isSunk]
             } else {
                 this.missedAttacks.push([x,y])
                 return ["it's a miss!"]
