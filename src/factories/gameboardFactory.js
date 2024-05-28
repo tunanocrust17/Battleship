@@ -123,7 +123,7 @@ class Gameboard {
                 target.hit()
                 this.landedAttacks.push([x,y])
                 let allSunk = this.checkAllShipsSunk()
-                return ["it's a hit!", target,  target.isSunk, allSunk ]
+                return ["it's a hit!", target, target.isSunk, allSunk ]
             } else {
                 this.missedAttacks.push([x,y])
                 return ["it's a miss!"]
