@@ -10,7 +10,7 @@ class Bot {
         return newGameboard
     }
 
-    checkValidPlacement( x , y , ship) {
+    checkValidPlacement( x , y , isRotated , ship) {
         let board = this.gameboard.gameboard
         const numRows = board.length
         const numCols = board[0].length
@@ -20,17 +20,31 @@ class Bot {
             return false
         }
 
-        if( y + ship.length > numCols){
-            return false
-        }
-
-        for ( let i = 0 ; i < ship.length ; i++){
-            if(board[ x ][ y + i ] !== null){
+        // check vertical placement
+        if(isRotated){
+            if(x + shipLength > numRows ){
                 return false
             }
-        }
 
-        return true
+            for ( let i = 0 ; i < shipLength ; i++ ) {
+                if(board[ x + i ] [ y ] !== null) {
+                    return false
+                }
+            }
+        } else {
+            //check horizontal placement
+            if( y + ship.length > numCols){
+                return false
+            }
+
+            for ( let i = 0 ; i < shipLength ; i++){
+                if(board[ x ][ y + i ] !== null){
+                    return false
+                }
+            }
+        }
+        //ship can be placed
+        return true 
     }
 
     randomNumber() {
@@ -52,17 +66,26 @@ class Bot {
         for (let j = 0 ; j < shipKeys.length ; j++ ) {
             let placed = false;
             while (!placed) {
-                let x = Math.round(Math.random()*9)
-                let y = Math.round(Math.random()*9)
+                const x = Math.round(Math.random()*9)
+                const y = Math.round(Math.random()*9)
+                const isRotated = Math.random() < 0.5
 
-                if(this.checkValidPlacement(x , y, shipKeys[j])){
+
+                if(this.checkValidPlacement(x , y , isRotated, ships[shipKeys[j]])){
                     let shipLen = ships[shipKeys[j]].length
-
-                    for ( let i = 0 ; i <= shipLen ; i++){
-                        this.gameboard.placeShip(x , y + i , shipKeys[j])
-                    }
-                    placed = true
-                }
+                
+                    if(isRotated) {
+                        for ( let i = 0 ; i < shipLen  ; i++){
+                            this.gameboard.placeShip(x + i , y , shipKeys[j])
+                        }    
+                        placed = true
+                    } else {
+                        for ( let i = 0 ; i < shipLen  ; i++){
+                            this.gameboard.placeShip(x , y + i , shipKeys[j])
+                        }
+                        placed = true
+                    }  
+                }                
             }
         }
     }
