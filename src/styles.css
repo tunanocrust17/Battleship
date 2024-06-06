@@ -1,0 +1,34 @@
+body {
+    background-color: rgb(237, 237, 237);
+}
+
+.battleship {
+    display: flex;
+    justify-content: center;
+    font-family: poppins;
+}
+
+.boardPlacementContainer {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    grid-gap: 10px;
+    width: 500px;
+    height: 500px;
+}
+
+.dragging{
+    opacity: .5;
+}
+
+#carrier {
+    width: 30px;
+    height: 15px;
+    background-color: red;
+}
+
+#battleship {
+    width: 30px;
+    height: 15px;
+    background-color: blue;
+}
+
