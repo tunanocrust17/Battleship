@@ -12,7 +12,7 @@
     <h1 class="battleship">Battleship</h1>
 
     <div class="placeShipsSetup">
-        <div class="boardPlacementContainer">
+        <div class="playerSetupBoard">
             
         </div>
         <div class="shipsContainer">
@@ -22,6 +22,14 @@
             <div id="submarine" class="draggable" draggable="true" data-length="3"></div>
             <div id="patrol" class="draggable" draggable="true" data-length="2"></div>
         </div>
+        <div class="beginGameDiv">
+            <button class="beginGame hidden">Go!</button>
+        </div>
+    </div>
+
+    <div class="gameContainer">
+        <div class="playerBoard"></div>
+        <div class="botBoard hidden"></div>
     </div>
 </body>
 </html>
