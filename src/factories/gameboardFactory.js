@@ -10,6 +10,7 @@ class Gameboard {
         this.gameboard = this.#createGameboard(),
         this.landedAttacks = [],
         this.missedAttacks = [],
+        this.numberOfPlacedShips = [],
         this.numberOfSunkShips = 0,
         this.allShipsSunk = false
     }
@@ -95,6 +96,13 @@ class Gameboard {
         this.numberOfSunkShips = temporarySunkCount
 
         return
+    }
+
+    checkAllShipsPlaced() {
+        if(this.numberOfPlacedShips === 5) {
+            return true
+        }
+        return false
     }
 
     checkAllShipsSunk() {
