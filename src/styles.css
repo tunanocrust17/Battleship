@@ -5,30 +5,85 @@ body {
 .battleship {
     display: flex;
     justify-content: center;
+    color: rgb(49, 49, 49);
     font-family: poppins;
 }
 
-.boardPlacementContainer {
+.placeShipsSetup {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+}
+
+.playerSetupBoard, .playerBoard, .botBoard {
     display: grid;
     grid-template-columns: repeat(10, 1fr);
-    grid-gap: 10px;
+    grid-gap: 3px;
     width: 500px;
     height: 500px;
+}
+
+.shipsContainer {
+    padding: 75px 0 25px;
+    display: flex;
+    gap: 10px;
+
+}
+
+.cell {
+    min-height: 45px;
+    max-height: 45px;
+    min-width: 45px;
+    max-width: 45px;
+    border-style: solid;
+    border-radius: 15%;
+    border-color: grey;
 }
 
 .dragging{
     opacity: .5;
 }
 
+#carrier, #battleship, #destroyer, #submarine, #patrol {
+    height: 45px;
+    border-radius: 5px;
+}
+
 #carrier {
-    width: 30px;
-    height: 15px;
+    width: calc(45px * 5);
     background-color: red;
 }
 
 #battleship {
-    width: 30px;
-    height: 15px;
+    width: calc(45px * 4);
     background-color: blue;
 }
+
+#destroyer {
+    width: calc(45px * 3);
+    background-color: blueviolet;
+}
+
+#submarine {
+    width: calc(45px * 3);
+    background-color: aqua;
+}
+
+#patrol {
+    width: calc(45px * 2);
+    background-color: chartreuse;
+}
+
+.gameContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 75px;
+}
+
+.hidden {
+    display: none;
+}
+
 
