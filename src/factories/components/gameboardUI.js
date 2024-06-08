@@ -1,5 +1,4 @@
-function createGamebaordUI() {
-    const placeShipContainer = document.querySelector('.boardPlacementContainer')
+function createGameboardUI(board) {
 
     for ( let i = 0 ; i < 10 ; i++) {
         for ( let j = 0 ; j < 10 ; j++) {
@@ -8,10 +7,19 @@ function createGamebaordUI() {
             gridItem.dataset.x = i
             gridItem.dataset.y = j
             
-            gridItem.textContent="a"
-            placeShipContainer.appendChild(gridItem)
+            board.appendChild(gridItem)
         }
     }
 }
 
-export {createGamebaordUI}
+function createPlayerBoard() {
+    const placeShipContainer = document.querySelector('.playerSetupBoard')
+    createGameboardUI(placeShipContainer)
+}
+
+function createBotBoard() {
+    const botBoard = document.querySelector('.botBoard')
+    createGameboardUI(botBoard)
+}
+
+export {createPlayerBoard, createBotBoard}
