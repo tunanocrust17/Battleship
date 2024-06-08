@@ -100,8 +100,7 @@ function gameController() {
                         }
 
                         if(player1.gameboard.checkAllShipsPlaced()){
-                            let beginGameButton = document.querySelector('.beginGame')
-                            beginGameButton.classList.remove('hidden')
+                            renderGameStartBtn()
                         }
 
                     } else {
@@ -113,8 +112,7 @@ function gameController() {
                         
                         player1.gameboard.numberOfPlacedShips++
                         if(player1.gameboard.checkAllShipsPlaced()){
-                            let beginGameButton = document.querySelector('.beginGame')
-                            beginGameButton.classList.remove('hidden')
+                            renderGameStartBtn()
                         }
                     }
 
@@ -157,13 +155,19 @@ function gameController() {
 
     placeUserShips()
 
-    let beginGameButton = document.querySelector('.beginGame')
-    beginGameButton.addEventListener('click', (e) => {
+    function renderGameStartBtn() {
+        let beginGameButton = document.querySelector('.beginGame')
+        beginGameButton.classList.remove('hidden')
+
+        beginGameButton.addEventListener('click', () => displayGameBoards())
+    }
+
+
+    function displayGameBoards() {
         let placeShipSetup = document.querySelector('.placeShipsSetup')
         let setupBoard = document.querySelector('.playerSetupBoard')
         let playerGameboard = document.querySelector('.playerBoard')
         
-
         //hide ship setup 
         placeShipSetup.classList.add('hidden')
 
@@ -175,7 +179,13 @@ function gameController() {
         let botBoard = document.querySelector('.botBoard')
         botBoard.classList.remove('hidden')
 
-    })
+    }
+
+    function startGame() {
+        displayGameBoards()
+        
+    }
+
 }
 
 export {gameController}
