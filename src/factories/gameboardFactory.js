@@ -115,28 +115,35 @@ class Gameboard {
 
     receiveInput(x, y){
 
-        if(this.isValidAttack(x,y)){
-            let board = this.gameboard
+        if(!this.isValidAttack(x,y)){
+            return ["not a valid attack"];
+        }
 
-            let ships = {
-                carrier: this.carrier,
-                battleship: this.battleship,
-                destroyer: this.destroyer,
-                submarine: this.submarine,
-                patrol: this.patrol
-            }
-            
-            if(board[x][y] !== null){
-                let target = ships[board[x][y]]
-                target.hit()
-                this.landedAttacks.push([x,y])
-                let allSunk = this.checkAllShipsSunk()
-                return ["it's a hit!", target, target.isSunk, allSunk ]
-            } else {
-                this.missedAttacks.push([x,y])
-                return ["it's a miss!"]
-            }
-        } else return "not a valid attack"
+    //     if (this.#isArrayInArray(this.getSuccessfulAttacks(), [x, y]) || 
+    //     this.#isArrayInArray(this.getMissedAttacks(), [x, y])) {
+    //     return ["repeated attack"];
+    // }
+
+        let board = this.gameboard
+
+        let ships = {
+            carrier: this.carrier,
+            battleship: this.battleship,
+            destroyer: this.destroyer,
+            submarine: this.submarine,
+            patrol: this.patrol
+        }
+        
+        if(board[x][y] !== null){
+            let target = ships[board[x][y]]
+            target.hit()
+            this.landedAttacks.push([x,y])
+            let allSunk = this.checkAllShipsSunk()
+            return ["it's a hit!", target, target.isSunk, allSunk ]
+        } else {
+            this.missedAttacks.push([x,y])
+            return ["it's a miss!"]
+        }
     }
 }
 
