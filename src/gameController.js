@@ -179,8 +179,8 @@ function gameController() {
             playerGameboard.appendChild(setupBoard.firstChild)
         }
 
-        let botBoard = document.querySelector('.botBoard')
-        botBoard.classList.remove('hidden')
+        let gameContainer = document.querySelector('.gameContainer')
+        gameContainer.classList.remove('hidden')
 
     }
 
@@ -195,32 +195,38 @@ function gameController() {
         return player1.attackEnemy(datasetX , datasetY , newBot)
     }
 
+    function playerTurn(e){
+        let attackMessage =  allowAttack(e)
+
+        if(attackMessage == "it's a hit!") {
+            e.target.style.backgroundColor = 'green'
+            player1.switchPlayerTurn()
+            deactivateBotBoard()
+            setTimeout(gameFlow, 250)
+        } else if( attackMessage == "it's a miss!") {
+            e.target.style.backgroundColor = 'red'
+            player1.switchPlayerTurn()
+            deactivateBotBoard()
+            setTimeout(gameFlow, 250)
+        }
+        else {
+            console.log(player1.playersTurn)
+        }
+    }
+
     function activateBotBoard() {
         let botCells = document.querySelectorAll('div.botBoard > div')
         botCells.forEach((cell) => {
-            cell.addEventListener('click', (e) => {
-                
-                let attackMessage =  allowAttack(e)
-
-                    if(attackMessage == "it's a hit!") {
-                        e.target.style.backgroundColor = 'green'
-                        player1.switchPlayerTurn()
-                        gameFlow()
-                        console.log(player1.playersTurn)
-                        console.log(attackMessage)
-                    } else if( attackMessage == "it's a miss!") {
-                        e.target.style.backgroundColor = 'red'
-                        player1.switchPlayerTurn()
-                        gameFlow()
-                        console.log(player1.playersTurn)
-                        console.log(attackMessage)
-                    }
-                    else {
-                        console.log(player1.playersTurn)
-                    }
-                })
+            cell.addEventListener('click', playerTurn)
             })
         }
+    
+    function deactivateBotBoard() {
+        let botCells = document.querySelectorAll('div.botBoard > div')
+        botCells.forEach((cell) => {
+            cell.removeEventListener('click', playerTurn)
+            })
+    }
 
     function checkWinner() {
         if(player1.gameboard.allShipsSunk == true) {
@@ -240,6 +246,7 @@ function gameController() {
         let finalMessage = document.createElement('h1')
         finalMessage.innerHTML = endMessage
         gameOverDiv.appendChild(finalMessage)
+        gameOverDiv.classList.remove('hidden')
 
 
     }
@@ -257,9 +264,7 @@ function gameController() {
                 activateBotBoard()
             } else {
                 //have the bot attack if players turn is false
-                const x = Math.round(Math.random()*9)
-                const y = Math.round(Math.random()*9)
-                newBot.attackPlayer( x , y , player1)
+                let [attackMessage, x , y,] = newBot.attackPlayer( player1)
 
                 //get the cell that the bot selected and mark it purple
                 let selector = `div[data-x="${x}"][data-y="${y}"]`
