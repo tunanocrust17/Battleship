@@ -243,12 +243,11 @@ function gameController() {
         gameContainer.classList.add('hidden')
 
         let gameOverDiv = document.querySelector('.gameOverDiv')
-        let finalMessage = document.createElement('h1')
-        finalMessage.innerHTML = endMessage
-        gameOverDiv.appendChild(finalMessage)
+        let gameOverMessage = document.querySelector('.gameOverMessage')
         gameOverDiv.classList.remove('hidden')
 
-
+        gameOverMessage.innerHTML = endMessage
+    
     }
 
     function gameFlow() {
