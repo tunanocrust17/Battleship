@@ -159,7 +159,10 @@ function gameController() {
         let beginGameButton = document.querySelector('.beginGame')
         beginGameButton.classList.remove('hidden')
 
-        beginGameButton.addEventListener('click', () => displayGameBoards())
+        beginGameButton.addEventListener('click', () => {
+            // displayGameBoards()
+            startGame()
+        })
     }
 
 
@@ -183,7 +186,92 @@ function gameController() {
 
     function startGame() {
         displayGameBoards()
+        gameFlow()
+    }
+
+    function allowAttack(e) {
+        let datasetX = e.target.dataset.x
+        let datasetY = e.target.dataset.y
+        return player1.attackEnemy(datasetX , datasetY , newBot)
+    }
+
+    function activateBotBoard() {
+        let botCells = document.querySelectorAll('div.botBoard > div')
+        botCells.forEach((cell) => {
+            cell.addEventListener('click', (e) => {
+                
+                let attackMessage =  allowAttack(e)
+
+                    if(attackMessage == "it's a hit!") {
+                        e.target.style.backgroundColor = 'green'
+                        player1.switchPlayerTurn()
+                        gameFlow()
+                        console.log(player1.playersTurn)
+                        console.log(attackMessage)
+                    } else if( attackMessage == "it's a miss!") {
+                        e.target.style.backgroundColor = 'red'
+                        player1.switchPlayerTurn()
+                        gameFlow()
+                        console.log(player1.playersTurn)
+                        console.log(attackMessage)
+                    }
+                    else {
+                        console.log(player1.playersTurn)
+                    }
+                })
+            })
+        }
+
+    function checkWinner() {
+        if(player1.gameboard.allShipsSunk == true) {
+            return ["Ah sorry the bot beat you this time!" , true ]
+        } else if (newBot.gameboard.allShipsSunk == true) {
+            return ["You won! Congrats!" , true ]
+        }
         
+        return ["no winner yet", false]
+    }
+
+    function endOfGameFunction(endMessage){
+        let gameContainer = document.querySelector('.gameContainer')
+        gameContainer.classList.add('hidden')
+
+        let gameOverDiv = document.querySelector('.gameOverDiv')
+        let finalMessage = document.createElement('h1')
+        finalMessage.innerHTML = endMessage
+        gameOverDiv.appendChild(finalMessage)
+
+
+    }
+
+    function gameFlow() {
+        console.log(player1.playersTurn)
+        let [winMessage, gameWon] = checkWinner()
+
+        if(gameWon) {
+            console.log(winMessage)
+            endOfGameFunction(winMessage)
+            return 
+        } else {
+            if(player1.playersTurn == true) {
+                activateBotBoard()
+            } else {
+                //have the bot attack if players turn is false
+                const x = Math.round(Math.random()*9)
+                const y = Math.round(Math.random()*9)
+                newBot.attackPlayer( x , y , player1)
+
+                //get the cell that the bot selected and mark it purple
+                let selector = `div[data-x="${x}"][data-y="${y}"]`
+                let cellAttacked = document.querySelector(selector)
+                cellAttacked.style.backgroundColor = 'purple'
+
+                //switch player turn and keep the game going
+                player1.switchPlayerTurn()
+                return gameFlow()
+            }
+        }
+        return
     }
 
 }
