@@ -92,15 +92,17 @@ class Bot {
 
 
 
-    attackPlayer( x , y , player ) {
-        let [attackMessage] = player.gameboard.receiveInput( x , y )
+    attackPlayer( player ) {
+        let x,y,attackMessage;
+
+        do {
+            x = this.randomNumber();
+            y = this.randomNumber();
+            [attackMessage] = player.gameboard.receiveInput(x, y);
+        } while (attackMessage === "not a valid attack");
         
-        if(attackMessage == "it's a hit!" || attackMessage == "it's a miss!") {
-            console.log("x is " + x , "y is " + y)
-            return attackMessage
-        } else {
-            return this.attackPlayer( x , y , player )
-        }
+        console.log("x is " + x, "y is " + y);
+        return [attackMessage, x , y];
     }
 
 }
