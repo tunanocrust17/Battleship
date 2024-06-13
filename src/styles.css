@@ -1,3 +1,9 @@
+:root{
+    --boxSize: 45px;
+    --shipSize: 45px;
+    --boxGap: 10px;
+}
+
 body {
     background-color: rgb(237, 237, 237);
 }
@@ -27,7 +33,7 @@ body {
 .shipsContainer {
     padding: 75px 0 25px;
     display: flex;
-    gap: 10px;
+    gap: var(--boxGap);
 
 }
 
@@ -41,6 +47,10 @@ body {
     border-color: grey;
 }
 
+/* .draggable{
+    position: relative;
+} */
+
 .dragging{
     opacity: .5;
 }
@@ -51,27 +61,28 @@ body {
 }
 
 #carrier {
-    width: calc(45px * 5);
+    height: var(--shipSize);
+    width: calc((var(--shipSize) * 5 ));
     background-color: red;
 }
 
 #battleship {
-    width: calc(45px * 4);
+    width: calc(var(--shipSize) * 4);
     background-color: blue;
 }
 
 #destroyer {
-    width: calc(45px * 3);
+    width: calc(var(--shipSize) * 3);
     background-color: blueviolet;
 }
 
 #submarine {
-    width: calc(45px * 3);
+    width: calc(var(--shipSize) * 3);
     background-color: aqua;
 }
 
 #patrol {
-    width: calc(45px * 2);
+    width: calc(var(--shipSize) * 2);
     background-color: chartreuse;
 }
 
