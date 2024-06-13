@@ -47,6 +47,16 @@ body {
     border-color: grey;
 }
 
+.botBoard >div:hover {
+    opacity: 25%;
+    background-color: black;
+}
+
+.cellHover{
+    background-color: black;
+    opacity: 25%;
+}
+
 /* .draggable{
     position: relative;
 } */
@@ -96,5 +106,3 @@ body {
 .hidden {
     display: none;
 }
-
-
