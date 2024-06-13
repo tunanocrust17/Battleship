@@ -16,6 +16,7 @@ function gameController() {
         function dragStartHandler(e) {
             e.dataTransfer.setData("shipName", e.target.id)
             e.dataTransfer.setData("shipLength", e.target.dataset.length)
+            e.dataTransfer.setData("isRotated", e.target.dataset.isrotated)
             console.log('drag-start')
             e.target.classList.add('dragging')
         }
@@ -40,7 +41,7 @@ function gameController() {
                     return false
                 }
 
-                if(isRotated) {
+                if(isRotated === "true") {
                     if( x + shipLength > numRows){
                         return false
                     }
@@ -79,7 +80,7 @@ function gameController() {
                     let dropCell = e.target
 
 
-                    if(isRotated) {
+                    if(isRotated === "true") {
                         for ( let i = 0 ; i < shipLength * 10 ; i+=10) {
                             let nextCell = cellSiblings(dropCell , i)
                             nextCell.setAttribute('id' , shipName)
@@ -93,11 +94,13 @@ function gameController() {
                     }
                     
                     
-                    if(isRotated) {
+                    if(isRotated === "true") {
                         for ( let i = 0 ; i < shipLength ; i++ ){
                             player1.gameboard.placeShip( x + i , y , shipName)
                             dragging.classList.add('hidden')
                         }
+
+                        player1.gameboard.numberOfPlacedShips++
 
                         if(player1.gameboard.checkAllShipsPlaced()){
                             renderGameStartBtn()
@@ -107,19 +110,14 @@ function gameController() {
                         for ( let i = 0 ; i < shipLength ; i++ ) {
                             player1.gameboard.placeShip( x , y + i , shipName)
                             dragging.classList.add('hidden')
-                            
                         }
                         
                         player1.gameboard.numberOfPlacedShips++
+                        
                         if(player1.gameboard.checkAllShipsPlaced()){
                             renderGameStartBtn()
                         }
                     }
-
-
-                    
-
-                    console.log(player1.gameboard.gameboard)
                 }
             }
 
@@ -128,7 +126,7 @@ function gameController() {
             const shipLength = parseInt(e.dataTransfer.getData("shipLength"))
             const datasetX = parseInt(e.target.dataset.x)
             const datasetY = parseInt(e.target.dataset.y)
-            let isRotated = false
+            const isRotated = e.dataTransfer.getData("isRotated")
 
             dropShip( datasetX , datasetY , isRotated , shipName , shipLength)
 
@@ -140,6 +138,7 @@ function gameController() {
 
         //assign functionality to each ship
         userShips.forEach(ship => {
+            ship.addEventListener('click', (e) => rotateShips(e))
             ship.addEventListener('dragstart', (e) => dragStartHandler(e))
             ship.addEventListener('dragend', (e) => dragEndHandler(e))
         })
@@ -160,7 +159,6 @@ function gameController() {
         beginGameButton.classList.remove('hidden')
 
         beginGameButton.addEventListener('click', () => {
-            // displayGameBoards()
             startGame()
         })
     }
@@ -182,6 +180,23 @@ function gameController() {
         let gameContainer = document.querySelector('.gameContainer')
         gameContainer.classList.remove('hidden')
 
+    }
+
+    function rotateShips(e){
+        let currentShip = e.target
+        let isRotated = currentShip.dataset.isrotated
+        let shipLength = parseInt(e.target.dataset.length)
+        
+        if(isRotated === "false" ) {
+            currentShip.setAttribute('data-isRotated', "true")
+            currentShip.style.width = 'var(--shipSize)'
+            currentShip.style.height = `calc(var(--shipSize) * ${shipLength})`
+        } 
+        else {
+            currentShip.setAttribute('data-isRotated', "false")
+            currentShip.style.width = `calc(var(--shipSize) * ${shipLength})`
+            currentShip.style.height = "var(--shipSize)"
+        }
     }
 
     function startGame() {
