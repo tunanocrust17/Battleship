@@ -2,6 +2,7 @@ class Ship {
     constructor(name, length){
         this.name = name
         this.length = length
+        this.isRotated = false,
         this.currentDamage = 0
         this.isSunk = false
     }
