@@ -78,6 +78,7 @@ function gameController() {
                     
                     const dragging = document.querySelector('.dragging')
                     let dropCell = e.target
+                    dropCell.classList.remove('cellHover')
 
 
                     if(isRotated === "true") {
@@ -146,8 +147,11 @@ function gameController() {
         //assign functionality to the board
 
         boardCells.forEach(cell => {
+            cell.addEventListener('dragenter', (e) => addHover(e))
+            cell.addEventListener('dragleave', (e) => removeHover(e))
             cell.addEventListener('dragover', (e) => dragOverHandler(e))
             cell.addEventListener('drop', (e) => dropHandler(e))
+
         })
 
     }
@@ -299,6 +303,14 @@ function gameController() {
             }
         }
         return
+    }
+
+    function addHover(e){
+        e.target.classList.add('cellHover')
+    }
+
+    function removeHover(e){
+        e.target.classList.remove('cellHover')
     }
 
 }
