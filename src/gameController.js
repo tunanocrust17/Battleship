@@ -262,7 +262,15 @@ function gameController() {
         gameOverDiv.classList.remove('hidden')
 
         gameOverMessage.innerHTML = endMessage
+
+        //refreshes page to play again
+        let playAgainBtn = document.querySelector('.playAgain')
+        playAgainBtn.addEventListener('click', playAgain)
     
+    }
+
+    function playAgain() {
+        location.reload()
     }
 
     function gameFlow() {
