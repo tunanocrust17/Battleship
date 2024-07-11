@@ -137,3 +137,16 @@ body {
 .hidden {
     display: none;
 }
+
+footer p {
+    position: absolute;
+    text-align: center;
+    bottom: 0;
+    width: 100%;
+    height: 1.5rem;
+    color: grey;
+}
+
+a {
+    color: grey;
+}
