@@ -103,6 +103,37 @@ body {
     gap: 75px;
 }
 
+.gameOverDiv {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.beginGame, .playAgain {
+  background-color: #744ceaf5;
+  border-radius: 8px;
+  border-style: none;
+  color: #FFFFFF;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  height: 40px;
+  line-height: 20px;
+  margin: 0;
+  padding: 10px 16px;
+  text-align: center;
+  transition: background-color 450ms;
+}
+
+.beginGame:hover,
+.beginGame.focus,
+.playAgain:hover,
+.playAgain:focus {
+  background-color: #F082AC;
+  transition-duration: 150ms;
+}
+
+
 .hidden {
     display: none;
 }
